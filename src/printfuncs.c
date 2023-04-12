@@ -12,6 +12,7 @@ unsigned int char2font(char c) {
     } else if( c == ' ') {
         return 0;
     }
+    else return 26;
 }
 
 
@@ -27,7 +28,16 @@ void printString(uint16_t x, uint16_t y, char *str) {
     }
 }
 
+static void scroll_screen() {
+    int x,y;
 
+    for(y = 0; y < SCREEN_TILE_HEIGHT-1; y++) {
+        for(x = 0; x < SCREEN_TILE_WIDTH; x++) {
+            uint16_t data = readTile(x,y+1);
+            drawTile(x, y, data);
+        }
+    }
+}
 
 int stdio_putc(int c) {
     static unsigned short x = 0, y = 0;
@@ -36,10 +46,15 @@ int stdio_putc(int c) {
         y++;
         x = 0;
     } else {
-        drawTile(x++, y, char2font(c));
+        drawTile(x++, y, char2font((char)c));
         if(x > SCREEN_TILE_WIDTH) {
             x = 0;
             y++;
         }
     }
+    if(y > SCREEN_TILE_HEIGHT-2) {
+        y--;
+        scroll_screen();
+    }
+
 }

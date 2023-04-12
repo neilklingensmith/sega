@@ -1,14 +1,14 @@
 
-CC := m68k-linux-gnu-gcc
-SIZE := m68k-linux-gnu-size
-OBJDUMP := m68k-linux-gnu-objdump
-OBJCOPY := m68k-linux-gnu-objcopy
+CC := ~/x-tools/m68k-unknown-elf/bin/m68k-unknown-elf-gcc
+SIZE := ~/x-tools/m68k-unknown-elf/bin/m68k-unknown-elf-size
+OBJDUMP := ~/x-tools/m68k-unknown-elf/bin/m68k-unknown-elf-objdump
+OBJCOPY := ~/x-tools/m68k-unknown-elf/bin/m68k-unknown-elf-objcopy
 
 ODIR := obj
 SDIR := src
 
 CFLAGS := -m68000  -Wl,--build-id=none -ffreestanding -nostdlib -Wall -g
-
+CFLAGS += -L~/x-tools/m68k-unknown-elf/lib/gcc/m68k-unknown-elf/12.2.0/
 
 OBJS += \
         main.o \

@@ -13,7 +13,7 @@ extern const uint32_t fontPallete[50][8];
 
 void wait() {
     unsigned int k;
-    for(k = 0; k < 5000; k++) {
+    for(k = 0; k < 50000; k++) {
         asm("nop");
         asm("nop");
         asm("nop");
@@ -37,7 +37,8 @@ void main() {
     while(1){
 //        printString(x,y, "Hello Dave");
         SACBRLDU = readController();
-        rprintf("SACBRLDU = 0x%02d\n", SACBRLDU);
+        rprintf("SACBRLDU = 0x%x\n", (int)(SACBRLDU&0xff));
+//        rprintf("Tile @ (5,5) is %d\n", (int)readTile(3,5));
 
         if(SACBRLDU & 1<<0) {
             y--;
@@ -52,7 +53,7 @@ void main() {
             x++;
         }
 
-        //wait();
+        wait();
     }
 }
 

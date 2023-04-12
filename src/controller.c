@@ -2,8 +2,6 @@
 #include <stdint.h>
 
 
-#define CTRL1_CONTROL  (*(uint8_t*)0xA10009)
-#define CTRL1_DATA     (*(uint8_t*)0xA10003)
 
 uint8_t readController() {
 
@@ -16,7 +14,7 @@ uint8_t readController() {
     CTRL1_DATA = 0;    // Set TH pin to 0
     asm("nop");
     asm("nop"); // delay
-    SA = CTRL1_DATA << 2;
+    SA = (CTRL1_DATA << 2) & 0xc0;
 
     return SA | CBRLDU;
 }

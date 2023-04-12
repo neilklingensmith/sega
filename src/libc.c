@@ -14,3 +14,11 @@ int tolower(int c) {
     if(c >= 'A' && c <= 'Z') return c -32;
     else return c;
 }
+
+unsigned int memcpy(char *buf, char data, unsigned int len) {
+    unsigned int k;
+    for(k = 0 ; k < len; k++) {
+        buf[k] = data;
+    }
+    return k;
+}

@@ -8,7 +8,7 @@
 /*---------------------------------------------------*/
 
 #include <string.h>
-#include <ctype.h>
+//#include <ctype.h>
 #include "rprintf.h"
 /*---------------------------------------------------*/
 /* The purpose of this routine is to output data the */
@@ -74,12 +74,12 @@ static void outs( charptr lp)
 /* This routine moves a number to the output buffer  */
 /* as directed by the padding and positioning flags. */
 /*                                                   */
-static void outnum(int num, const int base)
+const char digits[] = "0123456789ABCDEF";
+void outnum(int num, const int base)
 {
    charptr cp;
    int negative;
    char outbuf[32];
-   const char digits[] = "0123456789ABCDEF";
 
    /* Check if number is negative                    */
    /* NAK 2009-07-29 Negate the number only if it is not a hex value. */
@@ -91,26 +91,20 @@ static void outnum(int num, const int base)
       negative = 0;
 
    /* Build number (backwards) in outbuf             */
-   out_char('a');
    cp = outbuf;
-   out_char('b');
    do {
-   out_char('c');
       *cp++ = digits[num % base];
       } while ((num /= base) > 0);
-   out_char('d');
    if (negative)
       *cp++ = '-';
-   out_char('e');
    *cp-- = 0;
-   out_char('f');
 
    /* Move the converted number to the buffer and    */
    /* add in the padding where needed.               */
    len = strlen(outbuf);
    padding( !left_flag);
    while (cp >= outbuf)
-      out_char( *cp--);
+      out_char( (*cp--) & 0x7f );
    padding( left_flag);
 }
 
